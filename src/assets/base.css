@@ -36,6 +36,23 @@
   --section-gap: 160px;
 }
 
+/* 背景渐变色 */
+:root {
+  --jan-gradient: linear-gradient(135deg, #f8f8f8, #a5c6df);
+  --feb-gradient: linear-gradient(135deg, #f8f8f8, #db95b4);
+  --mar-gradient: linear-gradient(135deg, #f8f8f8, #8bce89);
+  --apr-gradient: linear-gradient(135deg, #f8f8f8, #d89c7c);
+  --may-gradient: linear-gradient(135deg, #f8f8f8, #dfdf75);
+  --jun-gradient: linear-gradient(135deg, #f8f8f8, #cf7eab);
+  --jul-gradient: linear-gradient(135deg, #f8f8f8, #ff867a);
+  --aug-gradient: linear-gradient(135deg, #f8f8f8, #333399);
+  --sep-gradient: linear-gradient(135deg, #f8f8f8, #9696cf);
+  --oct-gradient: linear-gradient(135deg, #f8f8f8, #ffb366);
+  --nov-gradient: linear-gradient(135deg, #f8f8f8, #d6a3d6);
+  --dec-gradient:  linear-gradient(135deg, #f8f8f8, #5d9aee);
+  --default-gradient: linear-gradient(135deg, #f8f8f8, #1690f5);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--vt-c-black);

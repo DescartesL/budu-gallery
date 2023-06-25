@@ -1,25 +1,20 @@
 <template>
     <div class="Container">
-        <div v-for="(item,index) in pictures" :key="index" @click="show(index)" class="Picture">
+        <div v-for="(item, index) in pictures" :key="index" @dblclick="show(index)" class="Picture">
             <img class="Picture-img" :src="item.src" alt="" />
             <div class="Picture-note"><span>{{ item.note }}</span></div>
         </div>
-        <div  class="Picture">
-            <img class="Picture-img" :src="url"  alt="" />
-            <div class="Picture-note"><span style="color: rgb(204, 6, 128);">{{ data }}</span></div>
+        <div class="Picture">
+            <img class="Picture-img" :src="url" alt="" />
+            <div class="Picture-note"><span style="color: rgb(204, 6, 128); font-weight: bolder;">{{ data }}</span></div>
         </div>
     </div>
 
-    <vue-easy-lightbox
-      :visible="visibleRef"
-      :imgs="imagesRef"
-      :index="indexRef"
-      @hide="onHide"
-    />
+    <vue-easy-lightbox :visible="visibleRef" :imgs="imagesRef" :index="indexRef" @hide="onHide"
+        @on-index-change="insertDiv" :loop="true"/>
 </template>
 
 <script>
-import { ref } from 'vue';
 import VueEasyLightbox from 'vue-easy-lightbox'
 export default {
     name: 'Pictures',
@@ -30,21 +25,19 @@ export default {
         return {
             visibleRef: false,
             indexRef: 0,
-            imagesRef : [
-            'https://picsum.photos/id/733/400',
-            'https://picsum.photos/id/613/400',
-            'https://picsum.photos/id/40/400',
-            'https://picsum.photos/id/465/400',
-            'https://picsum.photos/id/1029/400',
-            'https://picsum.photos/id/923/400',
-            'https://picsum.photos/id/425/400',
-            'https://picsum.photos/id/200/400',
-            'https://picsum.photos/id/244/400',
-            'https://picsum.photos/id/15/400'
+            imagesRef: [
+                'https://picsum.photos/id/733/400',
+                'https://picsum.photos/id/613/400',
+                'https://picsum.photos/id/40/400',
+                'https://picsum.photos/id/465/400',
+                'https://picsum.photos/id/1029/400',
+                'https://picsum.photos/id/923/400',
+                'https://picsum.photos/id/425/400',
+                'https://picsum.photos/id/200/400',
+                'https://picsum.photos/id/244/400',
+                'https://picsum.photos/id/15/400'
 
             ],
-
-
             title: 'Pictures',
             data: '',
             url: '/src/assets/images/months/',
@@ -98,7 +91,8 @@ export default {
         this.initPictures();
     },
     created() {
-        this.getRouterData()
+        this.getRouterData();
+        this.getBackground();
     },
     methods: {
         initPictures() {
@@ -121,8 +115,6 @@ export default {
                 picture.addEventListener("mousedown", startFunction);
                 picture.addEventListener("touchstart", startFunction);
             });
-
-
 
             // 这段JavaScript代码是一个用于初始化图片拖动功能的函数。它通过获取具有类名为"Picture"的所有元素，为每个元素添加拖动功能的事件监听器。
             // 函数中定义了一些辅助函数和变量。其中，"updateElementPosition"函数用于更新元素的位置，根据鼠标或触摸事件的移动距离来计算新的位置坐标，并将新的位置应用到元素的样式中。
@@ -170,14 +162,74 @@ export default {
         getRouterData() {
             this.data = this.$route.query.data
             this.url = this.url + this.$route.query.data + '.png'
-            console.log('page', this.$route)
         },
-         show (index)  {
+        show(index) {
             this.indexRef = index
             this.visibleRef = true
         },
-        onHide()  {
+
+        onHide() {
             this.visibleRef = false
+        },
+        getBackground() {
+            const month = this.$route.query.data
+            let gradientVariable;
+            switch (month) {
+                case "January":
+                    gradientVariable = "--jan-gradient";
+                    break;
+                case "February":
+                    gradientVariable = "--feb-gradient";
+                    break;
+                case "March":
+                    gradientVariable = "--mar-gradient";
+                    break;
+                case "April":
+                    gradientVariable = "--apr-gradient";
+                    break;
+                case "May":
+                    gradientVariable = "--may-gradient";
+                    break;
+                case "June":
+                    gradientVariable = "--jun-gradient";
+                    break;
+                case "July":
+                    gradientVariable = "--jul-gradient";
+                    break;
+                case "August":
+                    gradientVariable = "--aug-gradient";
+                    break;
+                case "September":
+                    gradientVariable = "--sep-gradient";
+                    break;
+                case "October":
+                    gradientVariable = "--oct-gradient";
+                    break;
+                case "November":
+                    gradientVariable = "--nov-gradient";
+                    break;
+                case "December":
+                    gradientVariable = "--dec-gradient";
+                    break;
+                default:
+                    gradientVariable = "--default-gradient"
+            }
+            const bodyElement = document.querySelector("body");
+            bodyElement.style.background = `var(${gradientVariable})`;
+        },
+        // 在vel-img下面添加一个div，用于显示图片的名称
+        insertDiv() {
+            setTimeout(() => {
+                var imgElement = document.querySelector(".vel-img");
+                console.log(imgElement)
+                var textNode = document.createTextNode("测试一下");
+                var divElement = document.createElement("div");
+                divElement.className = "vel-text";
+                divElement.appendChild(textNode);
+
+                var parentElement = imgElement.parentNode;
+                parentElement.insertBefore(divElement, imgElement.nextSibling);
+            }, 350)
         }
 
     },
@@ -187,7 +239,9 @@ export default {
 </script>
 
 <style>
+@import '../../assets/base.css';
 @import url("https://fonts.googleapis.com/css2?family=Caveat");
+@import url('..\..\assets\font\font.css/');
 
 * {
     box-sizing: border-box;
@@ -248,5 +302,21 @@ body {
     width: 1.5rem;
     aspect-ratio: 1 / 1;
     vertical-align: middle;
+}
+
+.vel-img {
+    border: 7px solid white;
+    box-shadow: -5px -5px 10px -4px rgba(0, 0, 0, 0.6), 5px -5px 10px -4px rgba(0, 0, 0, 0.6);
+}
+
+.vel-text {
+    background: white;
+    box-shadow: 0 5px 20px 2px rgba(0, 0, 0, .7);
+    height: 50px;
+    text-align: center;
+    font-family: 'wenrou', serif;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 45px;
 }
 </style>
