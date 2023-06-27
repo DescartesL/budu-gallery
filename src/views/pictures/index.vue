@@ -1,3 +1,5 @@
+<!-- 新需求：给定一个按钮，自动平铺，不然看着太乱了 -->
+
 <template>
     <div class="Container">
         <div v-for="(item, index) in pictures" :key="index" @dblclick="show(index)" class="Picture">
@@ -26,6 +28,7 @@ export default {
             visibleRef: false,
             indexRef: 0,
             imagesRef: [
+                
                 'https://picsum.photos/id/733/400',
                 'https://picsum.photos/id/613/400',
                 'https://picsum.photos/id/40/400',
@@ -35,7 +38,8 @@ export default {
                 'https://picsum.photos/id/425/400',
                 'https://picsum.photos/id/200/400',
                 'https://picsum.photos/id/244/400',
-                'https://picsum.photos/id/15/400'
+                'https://picsum.photos/id/15/400',
+                'https://t7.baidu.com/it/u=4080826490,615918710&fm=193&f=GIF',
 
             ],
             title: 'Pictures',
@@ -81,6 +85,10 @@ export default {
                 },
                 {
                     src: "https://picsum.photos/id/15/400",
+                    note: "Waterfall"
+                },
+                {
+                    src: "https://t7.baidu.com/it/u=4080826490,615918710&fm=193&f=GIF",
                     note: "Waterfall"
                 }
 
